@@ -6,10 +6,13 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { useRouter } from 'expo-router';
 import Loading from '../components/Loading';
 import CustomKeyboard from '../components/CustomKeyboard.js';
+import { useAuth } from '../context/authContext.js';
+
 
 const SignUp = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);  
+    const {register} = useAuth();
 
   const emailRef = useRef("");
   const passwordRef = useRef("");
@@ -18,14 +21,22 @@ const SignUp = () => {
 
   const handleRegister = async () => {
     if (!emailRef.current || !passwordRef.current || !usernameRef.current || !profileRef.current) {
-      Alert.alert('SignUp', 'Please fill all the fields!');
+      Alert.alert('Sign Up', 'Please fill all the fields!');
       return;
     }
 
     // Handle the registration logic here
     setLoading(true);
+
+    let response = await register(emailRef.current, passwordRef.current, usernameRef.current, profileRef.current);
     // After registration logic
     setLoading(false);
+
+    console.log('results:', response);
+    if(!response.success){
+            Alert.alert('Sign Up', response.msg);
+    }
+
   };
 
   return (
