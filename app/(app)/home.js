@@ -5,11 +5,13 @@ import { useAuth } from '../../context/authContext'
 import ChatList from '../../components/ChatList';
 import { heightPercentageToDP as hp , widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import Loading from '../../components/Loading';
+import { getDocs, query, where } from 'firebase/firestore';
+import { userRef } from '../../firebaseConfig';
 
 
 export default function home() {
     const {logout, user} = useAuth();
-    const [users, setUsers] = useState([1,2]);
+    const [users, setUsers] = useState([]);
     
     useEffect(()=>{
         if(user?.uid)
@@ -17,8 +19,19 @@ export default function home() {
     }, [])
 
     const getUser = async () =>{
-      // fetch
-    } 
+      // fetch all the users except the one who is logged in
+      const q = query(userRef , where('userId', '!=', user?.uid));
+
+      const querySnapshot = await getDocs(q);
+      let data = [];
+      querySnapshot.forEach(doc =>{
+        data.push({...doc.data()});
+      })
+
+      // console.log('users :', data);
+
+      setUsers(data);
+    }  
    
 
     // const handleLogout = async ()=> {

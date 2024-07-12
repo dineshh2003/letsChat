@@ -3,9 +3,20 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { Image } from 'expo-image';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-export default function ChatItem({ item }) {
+const blurhash =
+"|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[";
+
+
+export default function ChatItem({ item, router }) {
+
+    const openChatRoom = () =>{
+        router.push({pathname : '/chatRoom' , params: item});
+    }
+    
+
   return (
     <TouchableOpacity 
+        onPress={openChatRoom}
       style={{
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -19,25 +30,29 @@ export default function ChatItem({ item }) {
       }}
     >
       <Image 
-        source={require('../assets/images/shinchan.jpg')} 
+        source={{uri : item?.profileUrl}} 
         style={{
           height: hp(6),
           aspectRatio: 1,
           borderRadius: hp(3),
         }}
+        placeholder={blurhash}
+          contentFit="cover"
+          transition={500}
       />
       <View style={{ flex: 1, gap: 4 }}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <Text 
             style={{
               fontSize: hp(1.8),
-              fontWeight: '600',
+              fontWeight: '700',
               color: '#9ca3af'
             }}
           >
-            Shin chan
+           {item?.username}
           </Text>
         </View>
+        <Text className="font-light text-neutral-400 ">last message </Text>
       </View>
     </TouchableOpacity>
   );
