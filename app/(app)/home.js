@@ -39,7 +39,7 @@ export default function home() {
     // }
     // console.log('user data :',user);
   return (
-   <View className="flex-1 bg-white">
+   <View className="flex-1  bg-white">
         {/* <Text>home</Text> */}
         {/* <Button title='sign Out' onPress={handleLogout}></Button> */}
         {/* <Pressable onPress={handleLogout}>

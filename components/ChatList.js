@@ -8,7 +8,10 @@ export default function ChatList({ users }) {
     const router = useRouter();
   return (
     <GestureHandlerRootView>
-      <View style={{ flex: 1 }}>
+      <View 
+      style={{ flex: 1 }}
+    className = "bg-gray-50"
+      >
         <FlatList
           data={users}
           contentContainerStyle={{ flexGrow: 1, paddingVertical: 25 }}
@@ -18,7 +21,7 @@ export default function ChatList({ users }) {
            item={item}
            index={index}
            router={router}
-
+ 
         />}
         />
       </View>
